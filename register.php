@@ -32,7 +32,7 @@
             <div class="container" style="background-color: #eee">
                 <p><a href="./login.php">Already Have An Account?</a></p>
             </div>
-        </form>
+    </form>
 
     <?php
     if (isset($_POST['name']) && isset($_POST['email']) && isset($_POST['password']) && isset($_POST['repassword'])) {
@@ -76,8 +76,52 @@
 
     ?>
 
+    <script>
+        let form = document.getElementById('register_form');
 
-    <script src="./scripts/register.js"></script>
+            let name,email,password,repassword ;
+
+            const name_regex = new RegExp(/^[a-zA-Z ]*$/);
+            // const email_regex = new RegExp(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/);
+            const pass_regex = new RegExp(/^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/);
+            
+
+        form.addEventListener("change",(e)=>{
+            switch(e.target.id){
+                case 'name':
+                    name=e.target.value;
+                    break;
+                case 'email':
+                    email=e.target.value;
+                    break;
+                case 'password':
+                    password=e.target.value;
+                    break;
+                case 'repassword':
+                    repassword=e.target.value;
+                    break;
+                default:
+                    alert('fix switch in register');
+            }
+        })
+
+        form.addEventListener("submit",(e)=>{
+            let valid = false;
+            
+            if(!name_regex.test(name))
+                alert('Name contain special characters!!');
+            else if(!pass_regex.test(password))
+                alert('minimum 8, must contain at least one number and one character');
+            else{
+                if(password!==repassword)
+                    alert('password doesn`t match');
+                if(password===repassword && pass_regex.test(password) && pass_regex.test(repassword)) 
+                    valid=true;
+            }
+            if(!valid)
+                e.preventDefault();
+        })
+    </script>
 </body>
 
 </html>

@@ -12,7 +12,7 @@
 </head>
 
 <body>
-    <form action="<?php $_SERVER['PHP_SELF'] ?>" method="POST">
+    <form action="<?php $_SERVER['PHP_SELF'] ?>" method="POST" id="login_form">
       <h1>SIGN IN</h1>
       <div class="icon">
         <i class="fas fa-user-circle"></i>
@@ -20,9 +20,9 @@
       <div class="formcontainer">
         <div class="container">
           <label for="email"><strong>E-mail</strong></label>
-          <input type="text" placeholder="Enter E-mail" name="email" required>
+          <input type="text" placeholder="Enter E-mail" id="email" name="email" required>
           <label for="password"><strong>Password</strong></label>
-          <input type="password" placeholder="Enter Password" name="password" minlength="8" maxlength="20" required>
+          <input type="password" placeholder="Enter Password" id="password" name="password" minlength="8" maxlength="20" required>
         </div>
         <button type="submit"><strong>SIGN IN</strong></button>
         <div class="container" style="background-color: #eee">
@@ -32,10 +32,8 @@
     <?php
 
     if(isset($_POST['email']) && isset($_POST['password'])){
-      // echo "<p>{$_POST['email']} {$_POST['password']}</p>";
-      // echo "<pre>";
-      // print_r($users);
-      // echo "</pre>";
+      if(strlen($_POST['email'])<6 || strlen($_POST['password'])<8)
+        exit();
       $email_found=false;
       $true_pass=false;
       $index=null;
@@ -72,7 +70,28 @@
 
   ?>
 
-  <script src="./scripts/login.js"></script>
+  <script>
+    let form = document.getElementById('login_form');
+    let email,password;
+    form.addEventListener('change',(e)=>{
+      switch(e.target.id){
+        case 'email':
+          email = e.target.value;
+          break;
+        case 'password':
+          password = e.target.password;
+          break;
+        default:
+          alert('fix switch in login');
+      }
+    })
+
+    form.addEventListener('submit',(e)=>{
+      if(email.length<6 || password.length<8)
+        e.preventDefault();
+    })
+
+  </script>
 </body>
 
 </html>
