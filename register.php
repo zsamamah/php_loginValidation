@@ -21,9 +21,26 @@ try{
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="./css/login.css">
     <title>Sign Up</title>
+            <!-- Favicon-->
+            <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
+        <!-- Bootstrap icons-->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" type="text/css" />
+        <!-- Google fonts-->
+        <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic,700italic" rel="stylesheet" type="text/css" />
+        <!-- Core theme CSS (includes Bootstrap)-->
+        <link href="css/styles.css" rel="stylesheet" />
 </head>
 
 <body>
+<nav class="navbar navbar-light bg-light static-top">
+            <div class="container">
+                <a class="navbar-brand" href="./index.php">Start Bootstrap</a>
+                <div>
+                    <a class="btn btn-primary" href="./login.php">Sign In</a>
+                    <a class="btn btn-primary" href="./register.php">Sign Up</a>
+                </div>
+            </div>
+        </nav>
     <form action="<?php $_SERVER['PHP_SELF'] ?>" method="POST" id="register_form">
         <h1>SIGN UP</h1>
         <div class="icon">
