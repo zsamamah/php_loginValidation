@@ -4,6 +4,6 @@
     session_unset();
     session_destroy();
 
-    echo "<a href='index.php'>index now</a>"
+    echo "<script>window.location.href='./login.php'</script>";
 
 ?>

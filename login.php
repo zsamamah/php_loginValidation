@@ -1,4 +1,17 @@
-<?php session_start() ?>
+<?php 
+session_start();
+try{
+  $sereverName = "localhost";
+  $dbName="store";
+  $dbusername = "zaid";
+  $dbpassword = "Zaid@123";
+  $conn = new PDO("mysql:host=$sereverName;dbname=$dbName",$dbusername,$dbpassword);
+  $conn->setAttribute(PDO::ATTR_ERRMODE,PDO::ERRMODE_EXCEPTION);
+  // echo "connection successfully!<br>";
+}catch(PDOException $e) {
+  echo "<br>" . $e->getMessage();
+}
+ ?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -34,33 +47,18 @@
     if(isset($_POST['email']) && isset($_POST['password'])){
       if(strlen($_POST['email'])<6 || strlen($_POST['password'])<8)
         exit();
-      $email_found=false;
-      $true_pass=false;
-      $index=null;
-      if(isset($_SESSION['users'])){
-        foreach($_SESSION['users'] as $key=>$val){
-          if($val['email']===$_POST['email']){
-            $email_found=true;
-            if($val['password']===$_POST['password']){
-              $true_pass=true;
-              $index=$key;
-            }
-          }
-        }
-        if($email_found && $true_pass){
-          echo "logged in as {$val['name']}!";
-          $_SESSION['logged_in'] = $_SESSION['users'][$index];
-          echo "<script>window.location.href='./welcome.php'</script>";
-        }
-        elseif($email_found && !$true_pass){
-          echo "<script>alert('Wrong Password')</script>";
-        }
-        elseif(!$email_found){
-          echo "<script>alert('Email Not Found!')</script>";
-        }
+      $login = "SELECT name,email FROM users WHERE email='{$_POST['email']}' AND password='{$_POST['password']}'";
+      $data = $conn->query($login);
+      $result = $data->fetch(PDO::FETCH_ASSOC);
+      // echo "<pre>";
+      // print_r($result);
+      // echo "</pre>";
+      if($data->rowCount()===1){
+        $_SESSION['logged_in'] = $result;
+      echo "<script>window.location.href='./welcome.php'</script>";
       }
       else
-        echo "<script>alert('Nobody Registered yet!!')</script>";
+        echo "<script>alert('Invalid Login')</script>";
     }
     ?>
 

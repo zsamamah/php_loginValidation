@@ -1,4 +1,16 @@
-<?php session_start() ?>
+<?php 
+try{
+    $sereverName = "localhost";
+    $dbName="store";
+    $dbusername = "zaid";
+    $dbpassword = "Zaid@123";
+    $conn = new PDO("mysql:host=$sereverName;dbname=$dbName",$dbusername,$dbpassword);
+    $conn->setAttribute(PDO::ATTR_ERRMODE,PDO::ERRMODE_EXCEPTION);
+    // echo "connection successfully!<br>";
+}catch(PDOException $e) {
+    echo "<br>" . $e->getMessage();
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -35,6 +47,7 @@
     </form>
 
     <?php
+
     if (isset($_POST['name']) && isset($_POST['email']) && isset($_POST['password']) && isset($_POST['repassword'])) {
         $name = $_POST['name'];
         $email = $_POST['email'];
@@ -53,24 +66,10 @@
             echo "<script>alert('password doen`t match!')</script>";
             exit();
         } else {
-            $_SESSION['user'] = array("name" => $name, "email" => $email, "password" => $password, "repassword" => $repassword);
-            if (isset($_SESSION['users'])) {
-                $found = false;
-                foreach ($_SESSION['users'] as $key => $val) {
-                    if ($_SESSION['users'][$key]['email'] === $email) {
-                        $found = true;
-                        break;
-                    }
-                }
-                if ($found) {
-                    echo "<script>alert('Email Found!')</script>";
-                    exit();
-                } else
-                    array_push($_SESSION['users'], $_SESSION['user']);
-            } else {
-                $_SESSION['users'] = [];
-                array_push($_SESSION['users'], $_SESSION['user']);
-            }
+           $newUser = "INSERT INTO users (name,email,password) VALUES ('$name','$email','$password')";
+            echo $newUser."<br>";
+            $conn->exec($newUser); 
+            echo "New user added successfully";
         }
     }
 
