@@ -1,5 +1,7 @@
 <?php
 session_start();
+if($_SESSION['logged_in']['is_admin']==='0')
+  header("Location: ../welcome.php");
 try {
   $sereverName = "localhost";
   $dbName = "store";
