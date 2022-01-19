@@ -83,10 +83,12 @@ try{
             echo "<script>alert('password doen`t match!')</script>";
             exit();
         } else {
-           $newUser = "INSERT INTO users (name,email,password) VALUES ('$name','$email','$password')";
+            $date = date("Y-m-d");
+           $newUser = "INSERT INTO users (name,email,password,date_created) VALUES ('$name','$email','$password','$date')";
             echo $newUser."<br>";
             $conn->exec($newUser); 
-            echo "New user added successfully";
+            echo "<script>alert('User Created Successfully!)</script>";
+            echo "<script>window.location.href='./login.php';</script>";
         }
     }
 

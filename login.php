@@ -64,12 +64,18 @@ try {
   if (isset($_POST['email']) && isset($_POST['password'])) {
     if (strlen($_POST['email']) < 6 || strlen($_POST['password']) < 8)
       exit();
-    $login = "SELECT name,email FROM users WHERE email='{$_POST['email']}' AND password='{$_POST['password']}'";
+    $login = "SELECT name,email,is_admin FROM users WHERE email='{$_POST['email']}' AND password='{$_POST['password']}'";
     $data = $conn->query($login);
     $result = $data->fetch(PDO::FETCH_ASSOC);
     if ($data->rowCount() === 1) {
       $_SESSION['logged_in'] = $result;
-      echo "<script>window.location.href='./welcome.php'</script>";
+      $date = "UPDATE users SET last_login='".date("Y-m-d")." ".date("H:i:s")."' WHERE email='{$_SESSION['logged_in']['email']}'";
+      $conn->exec($date);
+      if($_SESSION['logged_in']['is_admin']==='0'){
+        echo "<script>window.location.href='./welcome.php'</script>";
+      }
+      else
+        echo "<script>window.location.href='./admin2'</script>";
     } else
       echo "<script>alert('Invalid Login')</script>";
   }
@@ -78,7 +84,6 @@ try {
   <?php
   if (isset($_SESSION['logged_in']))
     echo "<a href='./logout.php'>Logout!!</a>";
-
   ?>
 
   <script>
