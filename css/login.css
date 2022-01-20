@@ -7,7 +7,7 @@ html, body {
     form {
     border: 5px solid #f1f1f1;
     }
-    input[type=text], input[type=password],input[type=email] {
+    input[type=text], input[type=password], input[type=email], input[type=date] {
     width: 100%;
     padding: 16px 8px;
     margin: 8px 0;

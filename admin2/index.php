@@ -1009,14 +1009,14 @@ try {
               </thead>
               <tbody>
               <?php
-              $sql = "SELECT p_id,name,email,last_login,date_created FROM users";
+              $sql = "SELECT p_id,name,lname,email,last_login,date_created FROM users";
               $data = $conn->query($sql);
               $result = $data->fetchAll(PDO::FETCH_ASSOC);
               // print_r($result);
               foreach($result as $val){
                 echo "<tr>";
                 echo "<td>{$val['p_id']}</td>";
-                echo "<td>{$val['name']}</td>";
+                echo "<td>{$val['name']} {$val['lname']}</td>";
                 echo "<td>{$val['email']}</td>";
                 echo "<td>{$val['last_login']}</td>";
                 echo "<td>{$val['date_created']}</td>";
